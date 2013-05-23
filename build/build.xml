@@ -3,6 +3,8 @@
   <!--echo message="os.name = ${os.name}" /-->
   <!--echo message="os.arch = ${os.arch}" /-->
   <!--echo message="os.version = ${os.version}" /-->
+  <!--for pcduino /-->
+  <condition property="platform" value="pcduino"><os family="unix" /></condition>
 
   <!-- Sets properties for macosx/windows/linux depending on current system -->
   <condition property="macosx"><os family="mac" /></condition>
@@ -479,6 +481,40 @@
     <antcall target="linux-unzip-arm-toolchain" />
   </target>
 
+  <target name="pcduino-build" depends="revision-check, linux-checkos, subprojects-build, pcduino-check-avalable" description="Build linux version">
+    <mkdir dir="linux/work" />
+
+    <copy todir="linux/work">
+      <fileset dir="shared" includes="lib/**" />
+      <fileset file="shared/revisions.txt" />
+    </copy>
+
+    <copy todir="linux/work/lib" flatten="true">
+      <fileset refid="runtime.jars" />
+    </copy>
+
+    <antcall target="assemble">
+      <param name="target.path" value="linux/work" />
+    </antcall>
+
+    <copy todir="linux/work" file="linux/dist/arduino" />
+    <chmod perm="755" file="linux/work/arduino" />
+
+    <copy todir="linux/work/hardware">
+      <fileset dir="linux/dist" includes="tools/**" />
+    </copy>
+
+    <chmod perm="755" file="linux/work/hardware/tools/avrdude" />
+    <chmod perm="755" file="linux/work/hardware/tools/bossac" />
+    <chmod perm="755" file="linux/work/hardware/tools/bossac64" />
+    <chmod perm="755" file="linux/work/hardware/tools/adk2tool" />
+    <chmod perm="755" file="linux/work/hardware/tools/adk2install" />
+
+    <copy todir="linux/work" file="linux/dist/arduino" />
+    <chmod perm="755" file="linux/work/arduino" />
+    <antcall target="pcduino-unzip-source" />
+  </target>
+
   <target name="linux32-build" depends="linux-build" description="Build linux (32-bit) version">
     <!-- Unzip AVR tools -->
     <exec executable="tar" dir="linux/work/hardware">
@@ -505,11 +541,46 @@
     <exec executable="./linux/work/arduino" spawn="false"/>
   </target>
 
+  <target name="pcduino-run" depends="pcduino-build"
+          description="Run Linux (32-bit) version">
+    <exec executable="./linux/work/arduino" spawn="false"/>
+  </target>
+
   <target name="linux64-run" depends="linux64-build"
 	  description="Run Linux (64-bit) version">
     <exec executable="./linux/work/arduino" spawn="false"/>
   </target>
 
+  <target name="pcduino-check-source">
+    <available file="linux/dist/pcduino-arduino.zip" property="pcduino_source_package_available" />
+  </target>
+
+  <target name="pcduino-get-source" depends="pcduino-check-source" unless="pcduino_source_package_available">
+    <get
+      src="https://github.com/pcduino/c_enviroment/archive/master.zip"
+      dest="linux/dist/pcduino-arduino.zip"
+      verbose="true" />
+  </target>
+
+  <target name="pcduino-check-avalable">
+    <available file="linux/work/hardware/arduino/pcduino/cores/" property="pcduino_source_available" />
+  </target>
+
+  <target name="pcduino-unzip-source" depends="pcduino-get-source, pcduino-check-source" unless="pcduino_source_available">
+    <!-- Unzip pcduino source to the destination folder -->
+    <unzip dest="linux/dist/" src="linux/dist/pcduino-arduino.zip" overwrite="false"/>
+    <copy todir="linux/work/hardware/arduino/pcduino/cores/arduino/">
+      <fileset dir="linux/dist/c_enviroment-master/hardware/arduino/cores/arduino" includes="**" />
+    </copy>
+    <copy todir="linux/work/hardware/arduino/pcduino/variants/sunxi/">
+      <fileset dir="linux/dist/c_enviroment-master/hardware/arduino/variants/sunxi" includes="**" />
+    </copy>
+    <copy todir="linux/work/hardware/arduino/pcduino/libraries/">
+      <fileset dir="linux/dist/c_enviroment-master/libraries" includes="**" />
+    </copy>   
+        
+  </target>
+  
   <target name="linux-check-arm-toolchain-distfile">
     <available file="linux/dist/gcc-arm-none-eabi-4.4.1-2010q1-188-linux32.tar.gz" property="arm_distfile_available" />
   </target>

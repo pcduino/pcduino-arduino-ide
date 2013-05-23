@@ -1,0 +1,11 @@
+pcduino.name=pcDuino (ARM 32-bits)
+pcduino.upload.tool=avrdude
+pcduino.upload.protocol=arduino
+pcduino.upload.maximum_size=104857600
+pcduino.upload.wait_for_upload_port=false
+pcduino.upload.native_usb=false
+pcduino.build.mcu=armhf
+pcduino.build.core=arduino
+pcduino.build.variant=sunxi
+
+
