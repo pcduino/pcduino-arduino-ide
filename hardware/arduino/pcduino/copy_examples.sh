@@ -9,5 +9,9 @@ do
     dir=`echo $i | cut -d'.' -f1`
     mkdir -p ${TOP}/${dst_dir}/pcDuino/${dir}
     cp $i ${TOP}/${dst_dir}/pcDuino/${dir}/${dir}.ino
+    #fix for tone_test
+    if [ "$dir" = "tone_test" ]; then
+        cp pitches.h ${TOP}/linux/work/hardware/arduino/pcduino/cores/arduino/ -f
+    fi
 done
 
