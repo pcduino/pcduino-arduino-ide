@@ -687,6 +687,9 @@
   <target name="linux64-dist" depends="linux-dist"
 	  description="Build .tar.gz of linux version" />
 
+  <target name="pcduino-dist" depends="linux-dist"
+          description="Build .tar.gz of linux version" />
+
   <!-- - - - - - - - -->
   <!-- Windows       -->
   <!-- - - - - - - - -->
