@@ -243,8 +243,8 @@ run.present.exclusive.macosx = true
 
 # ARDUINO PREFERENCES
 target_package = arduino
-target_platform = avr
-board = uno
+target_platform = pcduino
+board = pcduino
 software=ARDUINO
 # Warn when data segment uses greater than this percentage
 build.warn_data_percentage = 75
