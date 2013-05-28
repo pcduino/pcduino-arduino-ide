@@ -34,6 +34,9 @@ public class I18n {
       if (language != null && language.trim().length() > 0) {
         Locale.setDefault(new Locale(language));
       }
+      // add by liaods, bug fix for MissingResourceException
+      Locale.setDefault(new Locale(Locale.getDefault().toString().toLowerCase()));
+      // add end
       i18n = ResourceBundle.getBundle("processing.app.i18n.Resources", Locale.getDefault());
 
       PROMPT_YES = _("Yes");
