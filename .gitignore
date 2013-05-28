@@ -21,7 +21,7 @@ build/macosx/dist/gcc-*.tar.gz
 build/linux/work/
 build/linux/dist/*.tar.gz
 build/linux/*.tgz
-build/shared/examples/pcDuino/
+build/shared/examples/00.pcDuino/
 build/linux/dist/c_enviroment-master/
 build/linux/dist/pcduino-arduino.zip
 test-bin

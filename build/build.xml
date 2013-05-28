@@ -430,6 +430,10 @@
     </delete>
   </target>
 
+  <target name="pcduino-clean" >
+    <delete dir="shared/examples/00.pcDuino" />
+  </target>
+
   <target name="linux-checkos" unless="linux">
     <echo>
       =======================================================
@@ -513,6 +517,7 @@
     <copy todir="linux/work" file="linux/dist/arduino" />
     <chmod perm="755" file="linux/work/arduino" />
     <antcall target="pcduino-unzip-source" />
+    <antcall target="pcduino-copy-examples" />
   </target>
 
   <target name="linux32-build" depends="linux-build" description="Build linux (32-bit) version">
@@ -579,10 +584,10 @@
     <copy todir="linux/work/hardware/arduino/pcduino/libraries/">
       <fileset dir="linux/dist/c_enviroment-master/libraries" includes="**" />
     </copy>
-    <antcall target="pcduino-copy-examples" />
   </target>
 
   <target name="pcduino-copy-examples">
+    <delete dir="shared/examples/pcDuino" />
     <exec executable="/bin/bash">
       <arg line="linux/work/hardware/arduino/pcduino/copy_examples.sh linux/dist/c_enviroment-master/sample/ shared/examples" />
     </exec>
@@ -687,7 +692,7 @@
   <target name="linux64-dist" depends="linux-dist"
 	  description="Build .tar.gz of linux version" />
 
-  <target name="pcduino-dist" depends="linux-dist"
+  <target name="pcduino-dist" depends="pcduino-clean, pcduino-build, linux-dist"
           description="Build .tar.gz of linux version" />
 
   <!-- - - - - - - - -->
@@ -905,7 +910,7 @@
   <!-- - - - - - - - -->
 
   <target name="clean" description="Perform a spring cleaning"
-	  depends="linux-clean, windows-clean, macosx-clean, subprojects-clean">
+	  depends="pcduino-clean, linux-clean, windows-clean, macosx-clean, subprojects-clean">
   </target>
 
 </project>
