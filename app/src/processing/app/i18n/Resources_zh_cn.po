@@ -175,6 +175,10 @@ msgstr "常见问题"
 msgid "Visit Arduino.cc"
 msgstr "访问Arduino.cc"
 
+#: Editor.java
+msgid "Visit Arduino.cc"
+msgstr "访问pcDuino.com"
+
 #: Editor.java:1094
 msgid "http://arduino.cc/"
 msgstr "http://arduino.cc/"

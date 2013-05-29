@@ -1144,6 +1144,14 @@ public class Editor extends JFrame implements RunnerListener {
       menu.add(item);
     }
 
+    item = new JMenuItem(_("Visit pcDuino.com"));
+    item.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          Base.openURL(_("http://www.pcduino.com/"));
+        }
+      });
+    menu.add(item);
+
     return menu;
   }
 
