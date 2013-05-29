@@ -1,4 +1,4 @@
-pcduino.name=pcDuino (ARM 32-bits)
+pcduino.name=pcDuino (ARM Cortex-A8)
 pcduino.upload.tool=avrdude
 pcduino.upload.protocol=arduino
 pcduino.upload.maximum_size=104857600
