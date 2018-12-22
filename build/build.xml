@@ -562,7 +562,7 @@
 
   <target name="pcduino-get-source" depends="pcduino-check-source" unless="pcduino_source_package_available">
     <get
-      src="https://github.com/pcduino/c_enviroment/archive/master.zip"
+      src="https://github.com/pcduino/c_environment/archive/master.zip"
       dest="linux/dist/pcduino-arduino.zip"
       verbose="true" />
   </target>
@@ -575,21 +575,21 @@
     <!-- Unzip pcduino source to the destination folder -->
     <unzip dest="linux/dist/" src="linux/dist/pcduino-arduino.zip" overwrite="false"/>
     <copy todir="linux/work/hardware/arduino/pcduino/cores/arduino/">
-      <fileset dir="linux/dist/c_enviroment-master/hardware/arduino/cores/arduino" includes="**" />
-      <fileset dir="linux/dist/c_enviroment-master/sample" includes="core.h" />
+      <fileset dir="linux/dist/c_environment-master/hardware/arduino/cores/arduino" includes="**" />
+      <fileset dir="linux/dist/c_environment-master/sample" includes="core.h" />
     </copy>
     <copy todir="linux/work/hardware/arduino/pcduino/variants/sunxi/">
-      <fileset dir="linux/dist/c_enviroment-master/hardware/arduino/variants/sunxi" includes="**" />
+      <fileset dir="linux/dist/c_environment-master/hardware/arduino/variants/sunxi" includes="**" />
     </copy>
     <copy todir="linux/work/hardware/arduino/pcduino/libraries/">
-      <fileset dir="linux/dist/c_enviroment-master/libraries" includes="**" />
+      <fileset dir="linux/dist/c_environment-master/libraries" includes="**" />
     </copy>
   </target>
 
   <target name="pcduino-copy-examples">
     <delete dir="shared/examples/pcDuino" />
     <exec executable="/bin/bash">
-      <arg line="linux/work/hardware/arduino/pcduino/copy_examples.sh linux/dist/c_enviroment-master/sample/ shared/examples" />
+      <arg line="linux/work/hardware/arduino/pcduino/copy_examples.sh linux/dist/c_environment-master/sample/ shared/examples" />
     </exec>
         
   </target>
